@@ -18,19 +18,19 @@ import (
 )
 
 const (
-	IpcNamespace             = "remoterpc"
-	HttpRpcNamespace         = "user"
-	HttpRpcUrl               = "httpRpcUrl"
-	RpcModeFlag              = "rpcMode"
-	RpcModeHttpRpc           = "httpRpc"
-	RpcModeIpc               = "ipc"
-	IpcEndpoint              = "ipcEndpoint"
-	IpfsPortFlag             = "port"
-	HttpRpcDefaultUrl        = "http://127.0.0.1:9301"
-	HOME              string = "home"
-	PasswordFlag             = "password"
-	LocalFolderPath          = "s3"
-	BigFileSizeInMB          = 10
+	IpcNamespace      = "remoterpc"
+	HttpRpcNamespace  = "user"
+	HttpRpcUrl        = "httpRpcUrl"
+	RpcModeFlag       = "rpcMode"
+	RpcModeHttpRpc    = "httpRpc"
+	RpcModeIpc        = "ipc"
+	IpcEndpoint       = "ipcEndpoint"
+	IpfsPortFlag      = "port"
+	HttpRpcDefaultUrl = "http://127.0.0.1:9301"
+	Home              = "home"
+	PasswordFlag      = "password"
+	LocalFolderPath   = "s3"
+	BigFileSizeInMB   = 10
 )
 
 var (
@@ -42,14 +42,14 @@ var (
 )
 
 func PreRunE(cmd *cobra.Command, args []string) error {
-	homePath, err := cmd.Flags().GetString(HOME)
+	homePath, err := cmd.Flags().GetString(Home)
 	if err != nil {
 		utils.ErrorLog("failed to get 'home' path for the client")
 		return err
 	}
 	setting.SetIPCEndpoint(homePath)
 
-	password, err := cmd.Flags().GetString("password")
+	password, err := cmd.Flags().GetString(PasswordFlag)
 	if err != nil {
 		panic(errors.New("failed to get password from the parameters"))
 	}
@@ -86,12 +86,12 @@ func S3Migrate(cmd *cobra.Command, args []string) {
 
 	exists, err := S3Bucket.BucketExists(myBucket)
 	if err != nil || !exists {
-		utils.ErrorLog("failed to find the bucket %v: %v", myBucket, err)
+		utils.ErrorLogf("failed to find the bucket %v: %v", myBucket, err)
 	}
 
 	files, err := S3Bucket.ListObjects(myBucket)
 	if err != nil {
-		utils.ErrorLog("failed to read file list in the bucket %v: %v", myBucket, err)
+		utils.ErrorLogf("failed to read file list in the bucket %v: %v", myBucket, err)
 	}
 
 	folder := filepath.Join(file.GetTmpDownloadPath(), LocalFolderPath, myBucket)
@@ -102,17 +102,17 @@ func S3Migrate(cmd *cobra.Command, args []string) {
 			continue
 		}
 		fileKey := *file.Key
-		utils.Log("start downloading file %v from bucket %v", fileKey, myBucket)
+		utils.Logf("start downloading file %v from bucket %v", fileKey, myBucket)
 		downloadPath, err := S3Bucket.DownloadFile(myBucket, fileKey, folder, *file.Size)
 		if err != nil {
-			utils.ErrorLog("failed to download file %v from bucket %v: %v", fileKey, myBucket, err)
+			utils.ErrorLogf("failed to download file %v from bucket %v: %v", fileKey, myBucket, err)
 			continue
 		}
-		utils.Log("downloaded file %v from buckt %v", fileKey, myBucket)
-		utils.Log("start uploading file %v to sds", downloadPath)
+		utils.Logf("downloaded file %v from buckt %v", fileKey, myBucket)
+		utils.Logf("start uploading file %v to sds", downloadPath)
 		err = UploadToSds(requester, downloadPath)
 		if err != nil {
-			utils.ErrorLog("failed to uplaod file %v to sds: %v", fileKey, err)
+			utils.ErrorLogf("failed to uplaod file %v to sds: %v", fileKey, err)
 			continue
 		}
 	}

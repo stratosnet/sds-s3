@@ -3,9 +3,9 @@ title: SDS S3 Command Handbook
 description: List of commands for Operation between SDS and AWS S3.
 ---
 
-# SDS IPFS Command Handbook
+# SDS S3 Migrate Command Handbook
 
-## IPFS Client
+## S3 Migrate
 The `ppd s3migrate` command migrates a bucket or a file from AWS S3 to sds network. The command tool needs to communicate with a SDS resource node to interact with the network. For setting up a
 SDS resource node please refer to  [Setup and run a SDS Resource Node](../setup-and-run-a-sds-resource-node/)
 
@@ -13,21 +13,21 @@ SDS resource node please refer to  [Setup and run a SDS Resource Node](../setup-
 ppd s3migrate -h
 
 Usage:
-  ppd s3migrate [flags] [parameters]
+  ppd s3migrate [flags]
 
 Flags:
-  -h, --help                 help for ipfs
+  -h, --help                 help for s3migrate
       --httpRpcUrl string    http rpc url (default "http://127.0.0.1:9301")
       --ipcEndpoint string   ipc endpoint path
-  -p, --port string          port (default "6798")
-  -m, --rpcMode string       use httpRpc or ipc (default "ipc")
-      --password string      password to wallet
+  -p, --password string      wallet password
+  -m, --rpcMode string       use http rpc or ipc (default "ipc")
 
 Global Flags:
-  -r, --home string     path for the node (default "<root directory of your resource node>")
+  -r, --home string   path for the workspace (default "<root directory of your command tool>")
 ```
-
 <br>
+
+Please make sure sds account files are put in `accounts` folder under the home path (defined by -r or --home flag)
 
 There are two modes to communicate to a SDS resource node, and it could be switched by the --rpcMode flag
 
@@ -42,6 +42,16 @@ There are two modes to communicate to a SDS resource node, and it could be switc
    ppd s3migrate --rpcMode ipc --ipcEndpoint <path to the ipc endpoint>
    ```
 <br>
+
+## AWS Credentials File
+AWS credential needs to be stored in the shared configuration file (~/.aws/config) in the following example format
+
+```
+[default]
+aws_access_key_id = AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+region = us-east-2
+```
 
 ## S3 Migrate
 The `ppd s3migrate` command migrates a file or a bucket from AWS S3 to SDS network. It first downloads the file from the S3 by the

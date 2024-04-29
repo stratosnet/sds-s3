@@ -9,18 +9,12 @@ import (
 
 	"github.com/stratosnet/sds/cmd/common"
 	"github.com/stratosnet/sds/framework/utils"
-	"github.com/stratosnet/sds/pp/setting"
 )
 
 func main() {
-
 	rootCmd := getRootCmd()
-	verCmd := getVersionCmd()
 	s3Cmd := getS3()
-
-	rootCmd.AddCommand(verCmd)
 	rootCmd.AddCommand(s3Cmd)
-
 	err := rootCmd.Execute()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -30,7 +24,7 @@ func main() {
 func getRootCmd() *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use:               "ppd",
-		Short:             "resource node",
+		Short:             "sds node",
 		PersistentPreRunE: common.RootPreRunE,
 	}
 
@@ -40,8 +34,7 @@ func getRootCmd() *cobra.Command {
 		panic(err)
 	}
 
-	rootCmd.PersistentFlags().StringP(common.Home, "r", dir, "path for the node")
-	rootCmd.PersistentFlags().StringP(common.Config, "c", common.DefaultConfigPath, "configuration file path ")
+	rootCmd.PersistentFlags().StringP(common.Home, "r", dir, "path for the workspace")
 	return rootCmd
 }
 
@@ -54,22 +47,8 @@ func getS3() *cobra.Command {
 	}
 
 	cmd.PersistentFlags().StringP(s3.RpcModeFlag, "m", "ipc", "use http rpc or ipc")
-	cmd.PersistentFlags().String(s3.PasswordFlag, "", "wallet password")
-	cmd.PersistentFlags().StringP(s3.IpfsPortFlag, "p", "6798", "port")
+	cmd.PersistentFlags().StringP(s3.PasswordFlag, "p", "", "wallet password")
 	cmd.PersistentFlags().StringP(s3.IpcEndpoint, "", "", "ipc endpoint path")
 	cmd.PersistentFlags().StringP(s3.HttpRpcUrl, "", s3.HttpRpcDefaultUrl, "http rpc url")
-	return cmd
-}
-
-func getVersionCmd() *cobra.Command {
-
-	version := setting.Version
-	cmd := &cobra.Command{
-		Use:   "version",
-		Short: "get version of the build",
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println(version)
-		},
-	}
 	return cmd
 }

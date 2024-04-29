@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"github.com/pkg/errors"
+	"github.com/stratosnet/sds/pp/setting"
 	"os"
 	"path/filepath"
 	"time"
@@ -205,7 +206,7 @@ func reqListMsg(page uint64) (*rpc_api.ParamReqFileList, error) {
 
 func readWalletKeys(wallet string) bool {
 	if wallet == "" {
-		WalletAddress = findWallet("./accounts/")
+		WalletAddress = findWallet(filepath.Join(setting.GetRootPath(), "./accounts/"))
 	} else {
 		WalletAddress = wallet
 	}
@@ -213,7 +214,7 @@ func readWalletKeys(wallet string) bool {
 		return false
 	}
 
-	keyjson, err := os.ReadFile(filepath.Join("./accounts/", WalletAddress+".json"))
+	keyjson, err := os.ReadFile(filepath.Join(setting.GetRootPath(), "./accounts/", WalletAddress+".json"))
 	if utils.CheckError(err) {
 		utils.ErrorLog("getPublicKey ioutil.ReadFile", err)
 		return false

@@ -21,7 +21,7 @@ func (basics BucketBasics) ListBuckets() ([]types.Bucket, error) {
 	result, err := basics.S3Client.ListBuckets(context.TODO(), &s3.ListBucketsInput{})
 	var buckets []types.Bucket
 	if err != nil {
-		utils.ErrorLog("Couldn't list buckets for your account. Here's why: %v\n", err)
+		utils.ErrorLogf("Couldn't list buckets for your account. Here's why: %v\n", err)
 	} else {
 		buckets = result.Buckets
 	}
@@ -39,7 +39,7 @@ func (basics BucketBasics) DownloadLargeObject(bucketName string, objectKey stri
 		Key:    aws.String(objectKey),
 	})
 	if err != nil {
-		utils.ErrorLog("Couldn't download large object from %v:%v. Here's why: %v\n",
+		utils.ErrorLogf("Couldn't download large object from %v:%v. Here's why: %v\n",
 			bucketName, objectKey, err)
 	}
 	return buffer.Bytes(), err
@@ -51,7 +51,7 @@ func (basics BucketBasics) DownloadObject(bucketName string, objectKey string) (
 		Key:    aws.String(objectKey),
 	})
 	if err != nil {
-		utils.ErrorLog("Couldn't get object %v:%v. Here's why: %v\n", bucketName, objectKey, err)
+		utils.ErrorLogf("Couldn't get object %v:%v. Here's why: %v\n", bucketName, objectKey, err)
 		return nil, err
 	}
 	defer result.Body.Close()
@@ -64,7 +64,7 @@ func (basics BucketBasics) ListObjects(bucketName string) ([]types.Object, error
 	})
 	var contents []types.Object
 	if err != nil {
-		utils.ErrorLog("Couldn't list objects in bucket %v. Here's why: %v\n", bucketName, err)
+		utils.ErrorLogf("Couldn't list objects in bucket %v. Here's why: %v\n", bucketName, err)
 	} else {
 		contents = result.Contents
 	}
@@ -75,7 +75,7 @@ func (basics BucketBasics) DownloadFile(bucketName, objectKey, downloadFolder st
 	var body []byte
 	f, err := file.CreateFolderAndReopenFile(downloadFolder, objectKey)
 	if err != nil {
-		utils.ErrorLog("Couldn't create file %v. Here's why: %v\n", objectKey, err)
+		utils.ErrorLogf("Couldn't create file %v. Here's why: %v\n", objectKey, err)
 		return "", err
 	}
 	defer f.Close()
@@ -86,7 +86,7 @@ func (basics BucketBasics) DownloadFile(bucketName, objectKey, downloadFolder st
 		body, err = basics.DownloadLargeObject(bucketName, objectKey)
 	}
 	if err != nil {
-		utils.ErrorLog("Couldn't read object body from %v: %v\n", objectKey, err)
+		utils.ErrorLogf("Couldn't read object body from %v: %v\n", objectKey, err)
 	}
 	_, err = f.Write(body)
 	return f.Name(), err
@@ -103,16 +103,16 @@ func (basics BucketBasics) BucketExists(bucketName string) (bool, error) {
 		if errors.As(err, &apiError) {
 			switch apiError.(type) {
 			case *types.NotFound:
-				utils.ErrorLog("Bucket %v is available.\n", bucketName)
+				utils.ErrorLogf("Bucket %v is available.\n", bucketName)
 				exists = false
 				err = nil
 			default:
-				utils.ErrorLog("Either you don't have access to bucket %v or another error occurred. "+
+				utils.ErrorLogf("Either you don't have access to bucket %v or another error occurred. "+
 					"Here's what happened: %v\n", bucketName, err)
 			}
 		}
 	} else {
-		utils.Log("Bucket %v exists and you already own it.", bucketName)
+		utils.Logf("Bucket %v exists and you already own it.", bucketName)
 	}
 
 	return exists, err
