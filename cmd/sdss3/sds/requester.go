@@ -1,4 +1,4 @@
-package s3
+package sds
 
 import (
 	"bytes"
@@ -74,7 +74,7 @@ func GetHttpRequester(rpcUrl string) Requester {
 	}
 }
 
-func getIpcRequester(rpcClient *rpc.Client) Requester {
+func GetIpcRequester(rpcClient *rpc.Client) Requester {
 	return func(params interface{}, res any, ipcCmd string) error {
 		method := IpcNamespace + "_" + ipcCmd
 		err := rpcClient.Call(res, method, params)

@@ -1,4 +1,4 @@
-module sds-s3
+module github.com/stratosnet/sds/s3
 
 go 1.19
 
