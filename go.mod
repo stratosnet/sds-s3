@@ -1,24 +1,25 @@
-module sds-s3
+module github.com/stratosnet/sds/s3
 
 go 1.19
 
-replace (
-	github.com/stratosnet/sds => ../sds/ // for development on local
-	github.com/stratosnet/sds/framework => ../sds/framework // for development on local
-	github.com/stratosnet/sds/sds-msg => ../sds/sds-msg // for development on local
-	github.com/stratosnet/sds/tx-client => ../sds/tx-client // for development on local
-)
+//replace (
+//	github.com/stratosnet/sds => ../sds/ // for development on local
+//	github.com/stratosnet/sds/framework => ../sds/framework // for development on local
+//	github.com/stratosnet/sds/sds-msg => ../sds/sds-msg // for development on local
+//	github.com/stratosnet/sds/tx-client => ../sds/tx-client // for development on local
+//)
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.26.1
 	github.com/aws/aws-sdk-go-v2/config v1.27.11
 	github.com/aws/aws-sdk-go-v2/feature/s3/manager v1.16.15
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.53.1
+	github.com/aws/smithy-go v1.20.2
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.6.1
-	github.com/stratosnet/sds v0.11.3-0.20231219210612-f055bc0393a7
-	github.com/stratosnet/sds/framework v0.0.0-20240403142322-1b21be65b54e
-	github.com/stratosnet/sds/sds-msg v0.0.0-20240402154855-7d3bd1c42ab1
+	github.com/stratosnet/sds v0.11.9-0.20240430133946-5356542f135a
+	github.com/stratosnet/sds/framework v0.0.0-20240430125605-7657fe4df128
+	github.com/stratosnet/sds/sds-msg v0.0.0-20240430125605-7657fe4df128
 )
 
 require (
@@ -43,7 +44,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.20.5 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.23.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.28.6 // indirect
-	github.com/aws/smithy-go v1.20.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bgadrian/go-mnemonic v0.0.0-20170924142112-3188dc747a1b // indirect
 	github.com/btcsuite/btcd v0.23.4 // indirect
@@ -68,12 +68,12 @@ require (
 	github.com/ipfs/go-cid v0.3.2 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/klauspost/compress v1.17.2 // indirect
-	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
+	github.com/klauspost/cpuid/v2 v2.1.2 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
 	github.com/minio/sha256-simd v1.0.0 // indirect
 	github.com/mr-tron/base58 v1.2.0 // indirect
-	github.com/multiformats/go-base32 v0.0.3 // indirect
+	github.com/multiformats/go-base32 v0.1.0 // indirect
 	github.com/multiformats/go-base36 v0.1.0 // indirect
 	github.com/multiformats/go-multibase v0.2.0 // indirect
 	github.com/multiformats/go-multihash v0.2.3 // indirect
@@ -92,7 +92,7 @@ require (
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stratosnet/sds/tx-client v0.0.0-20240402154855-7d3bd1c42ab1 // indirect
+	github.com/stratosnet/sds/tx-client v0.0.0-20240430125605-7657fe4df128 // indirect
 	github.com/stratosnet/stratos-chain/api v0.0.0-20240306173854-f6cea5c437b6 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
@@ -104,12 +104,12 @@ require (
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20231002182017-d307bd883b97 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20230920204549-e6e6cdab5c13 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231009173412-8bfb1ae86b6c // indirect
-	google.golang.org/grpc v1.58.3 // indirect
+	google.golang.org/genproto v0.0.0-20231016165738-49dd2c1f3d0b // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20231012201019-e917dd12ba7a // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231030173426-d783a09b4405 // indirect
+	google.golang.org/grpc v1.59.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	lukechampine.com/blake3 v1.1.6 // indirect
+	lukechampine.com/blake3 v1.1.7 // indirect
 )

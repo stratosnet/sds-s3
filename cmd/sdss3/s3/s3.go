@@ -13,6 +13,10 @@ import (
 	"io"
 )
 
+const (
+	BigFileSizeInMB = 10
+)
+
 type BucketBasics struct {
 	S3Client *s3.Client
 }

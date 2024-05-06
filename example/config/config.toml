@@ -1,0 +1,8 @@
+[connectivity]
+rpc_mode='httpRpc'
+http_rpc_url='http://localhost:9301'
+ipc_endpoint=''
+
+[keys]
+wallet_address = 'st1sqzsk8mplv5248gx6dddzzxweqvew8rtst96fx'
+wallet_password = 'aaa'
